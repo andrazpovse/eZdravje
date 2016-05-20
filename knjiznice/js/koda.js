@@ -24,10 +24,9 @@ function getSessionId() {
 }
 
 
+//master-detail. Ko pritisnemo na oceno, se nam pokazejo se ostale podrobnosti o nasem stanju
 $(document).ready(function() {
     $("#itm").click(function(){
-        
-       
         $("#itmSpecific").show();
     }); 
 });
@@ -57,6 +56,13 @@ function generirajPodatke(stPacienta) {
 // TODO: Tukaj implementirate funkcionalnost, ki jo podpira vaša aplikacija
 
 
+$(document).ready(function(){
+    $("#details").hide();
+    $("#overall").click(function(){
+        $("#details").show();
+    });
+   
+});
 
 
 
