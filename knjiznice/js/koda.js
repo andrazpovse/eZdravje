@@ -24,6 +24,19 @@ function getSessionId() {
 }
 
 
+$(document).ready(function() {
+    $("#itm").click(function(){
+        
+       
+        $("#itmSpecific").show();
+    }); 
+});
+
+
+
+
+
+
 /**
  * Generator podatkov za novega pacienta, ki bo uporabljal aplikacijo. Pri
  * generiranju podatkov je potrebno najprej kreirati novega pacienta z
@@ -43,7 +56,13 @@ function generirajPodatke(stPacienta) {
 
 // TODO: Tukaj implementirate funkcionalnost, ki jo podpira vaša aplikacija
 
-// Create the tooltips only when document ready
+
+
+
+
+
+
+//----------------------------------------------------------ZAČETEK: tukaj so deli povezani z grafičnim prikazom --------------------------------------------------------------------------
 /*
  * @license Open source under BSD 2-clause (http://choosealicense.com/licenses/bsd-2-clause/)
  * Copyright (c) 2015, Curtis Bratton
@@ -312,3 +331,5 @@ function loadLiquidFillGauge(elementId, value, config) {
 
     return new GaugeUpdater();
 }
+
+//----------------------------------------------------------KONEC: tukaj so deli povezani z grafičnim prikazom --------------------------------------------------------------------------

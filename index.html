@@ -11,7 +11,6 @@
     }
   </style>
   <script src="knjiznice/js/jquery-2.2.3.min.js"></script>
-  <script type="text/javascript" src="knjiznice/js/jquery.qtip.js"></script>
   <script src="knjiznice/js/bootstrap.min.js"></script>
   <script src="knjiznice/js/koda.js"></script>
   
@@ -43,7 +42,7 @@
           <span class="icon-bar"></span><span class="icon-bar"></span><span class="icon-bar"></span>
         </button>
         <!-- ZAČETEK: Ime vaše aplikacije -->
-        <a class="navbar-brand" href="index.html">{ime vaše aplikacije}</a>
+        <a class="navbar-brand" href="index.html">Vaše zdravstveno stanje 6.0</a>
         <!-- KONEC: Ime vaše aplikacije -->
       </div>
       <div class="collapse navbar-collapse" id="menujska-vrstica">
@@ -69,13 +68,45 @@
     <div class="row">
       <div class="col-lg-12 text-center">
         <p class="lead"><strong>TO-DO</strong>: Na tem mestu implementirajte vašo aplikacijo.</p>
+        
+        
+        
+        
+        
+        <h1> tukaj naredimo se za vnos podatkov in izpis genericnih podatkov</h1>
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
         <svg id="fillgauge1"  width="97%" height="250" onclick="gauge1.update(NewValue());"></svg>
-        <h1> another one</h1>
-        <svg id="fillgauge2" width="19%" height="200" onclick="gauge2.update(NewValue());"></svg>
-        <svg id="fillgauge3" width="19%" height="200" onclick="gauge3.update(NewValue());"></svg>
-        <svg id="fillgauge4" width="19%" height="200" onclick="gauge4.update(NewValue());"></svg>
-        <svg id="fillgauge5" width="19%" height="200" onclick="gauge5.update(NewValue());"></svg>
-        <svg id="fillgauge6" width="19%" height="200" onclick="gauge6.update(NewValue());"></svg>
+
+             <svg id="fillgauge3" width="19%" height="200"></svg>
+             <svg id="fillgauge2" width="19%" height="200" onclick="gauge2.update(NewValue());"></svg>
+             <svg id="fillgauge4" width="19%" height="200" onclick="gauge4.update(NewValue());"></svg> 
+        
+
+          <br>
+
+            <svg id="fillgauge5" width="19%" height="200" onclick="gauge5.update(NewValue());"></svg>
+            <svg id="fillgauge6" width="19%" height="200" onclick="gauge6.update(NewValue());"></svg>
+       
+                
+                
+                
+                
+                
                 
                 
         
@@ -97,15 +128,16 @@
             config1.maxValue = 140;
             var gauge2= loadLiquidFillGauge("fillgauge2", 58, config1);
             var config2 = liquidFillGaugeDefaultSettings();
-            config2.circleColor = "#D4AB6A";
-            config2.textColor = "#553300";
-            config2.waveTextColor = "#805615";
-            config2.waveColor = "#AA7D39";
+            config2.circleColor = "#cc2900";
+            config2.textColor = "#404040";
+            config2.waveTextColor = "#f2f2f2";
+            config2.waveColor = "#991f00";
             config2.circleThickness = 0.1;
             config2.circleFillGap = 0.2;
             config2.textVertPosition = 0.8;
-            config2.waveAnimateTime = 60000/40;    //damo spremenljivko namesto 60 in potem ce je utrip majhen gre pocasi, ce je vecji hitreje
+            config2.waveAnimateTime = 60000/60;    //damo spremenljivko namesto 60 in potem ce je utrip majhen gre pocasi, ce je vecji hitreje
             config2.waveHeight = 0.3;
+            config2.circleThickness = 0.2;
             config2.waveCount = 1;
             config2.minValue = 80; //na sredini nekje valovanje
             config2.maxValue = 300;
@@ -149,6 +181,7 @@
             configTeza.textSize = 1.2;
             configTeza.minValue = 1;//damo fiksno, ker nocemo valovanja
             configTeza.maxValue = 1;
+            configTeza.circleThickness = 0.2;
             configTeza.displayPercent = false;
             var gauge5 = loadLiquidFillGauge("fillgauge5", 55, configTeza);
             var config5 = liquidFillGaugeDefaultSettings();
@@ -167,7 +200,7 @@
             config5.minValue = 1;//fiksno ker nocemo valovanja
             config5.maxValue = 1; 
             config5.displayPercent = false;
-            var gauge6 = loadLiquidFillGauge("fillgauge6", 102, config5);
+            var gauge6 = loadLiquidFillGauge("fillgauge6", 102, configTeza);
         
             function NewValue(){
                 if(Math.random() > .5){
@@ -177,6 +210,25 @@
                 }
             }
         </script>
+        
+        
+        
+        
+        
+        
+        
+        
+        <h1> tukaj mogoce izpisemo priporocila, kaksen video</h1>
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
           
       </div>
     </div>
