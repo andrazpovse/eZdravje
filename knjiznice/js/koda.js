@@ -24,17 +24,26 @@ function getSessionId() {
 }
 
 
-//master-detail. Ko pritisnemo na oceno, se nam pokazejo se ostale podrobnosti o nasem stanju
-$(document).ready(function() {
-    $("#itm").click(function(){
-        $("#itmSpecific").show();
-    }); 
-});
+
+
+$(document).ready(function() 
 
 
 
-$(document).ready(function()   //qtipi, ki nam kažejo kaj prikazuje kateri diagram
  {
+     
+     
+     $("#wikiText, #friendlyTip").hide();
+     
+     
+     $("#overall, #details").hide();
+     
+     
+   
+     
+     
+     
+//qtipi, ki nam kažejo kaj prikazuje kateri diagram
        $('#fillgauge2').qtip({   //prvi za spodnji krvni tlak----------------------------
         content: {
         text: 'Krvni tlak spodnji'
@@ -113,18 +122,6 @@ function generirajPodatke(stPacienta) {
 
 // TODO: Tukaj implementirate funkcionalnost, ki jo podpira vaša aplikacija
 
-    
-$(document).ready(function(){
-$("#details").hide();
-$("#overall").hide();
-
-    $("#overall").click(function(){
-        $("#details").show();
-        
-    });
-   
-});
-
 
 
 
@@ -182,7 +179,13 @@ function kreirajEHRzaBolnika() {
 	}
 }
 
-
+var stevec = 0;
+function preveri(){   //preverimo ali smo pridobili vse podatke, preden gremo naprej in prikazemo graficni prikaz
+    stevec++;
+    if (stevec == 5)
+        zakasnitev();
+    
+}
 
 /**
  * Za dodajanje vitalnih znakov pacienta je pripravljena kompozicija, ki
@@ -280,9 +283,12 @@ function preberiMeritveVitalnihZnakov() {
 					    type: 'GET',
 					    headers: {"Ehr-Session": sessionId},
 					    success: function (res) {
-				
-					      document.getElementById('utrip').innerHTML = "Vaš srčni utrip znaša " + res[res.length-1].pulse + " /min"
-					     
+				        var hint = "";
+				        if (res[res.length-1].pulse > 100)
+				            hint=' POZOR your heart is racing'
+					      document.getElementById('utrip').innerHTML = "Vaš srčni utrip znaša " + res[res.length-1].pulse + " /min" + hint;
+					      document.getElementById('utripNumber').innerHTML = res[res.length-1].pulse;
+					      preveri()   //pri vsakem klicu gremo v funkcijo "preveri", katera caka da se izvedejo vsi tej klici, potem pa nadaljuje z graficnim prikazom
 					    },
 					});
 
@@ -296,6 +302,8 @@ function preberiMeritveVitalnihZnakov() {
 					    success: function (res) {
 					    
 		                    document.getElementById('teza').innerHTML = "Vaša teža znaša " + res[res.length-1].weight + " kg"
+		                    document.getElementById('tezaNumber').innerHTML = res[res.length-1].weight;
+		                    preveri()
 					    },
 					});
 					
@@ -307,6 +315,8 @@ function preberiMeritveVitalnihZnakov() {
 					    success: function (res) {
 					    
 		                    document.getElementById('zgornjiTlak').innerHTML = "Vaš zgornji krvni pritisk znaša " + res[res.length-1].systolic + " mm Hg"
+		                    document.getElementById("zgornjiTlakNumber").innerHTML = res[res.length-1].systolic;
+		                    preveri()
 					    },
 					});
 					
@@ -318,6 +328,8 @@ function preberiMeritveVitalnihZnakov() {
 					    success: function (res) {
 					    
 		                    document.getElementById('spodnjiTlak').innerHTML = "Vaš spodnji krvni pritisk znaša  " + res[res.length-1].diastolic + " mm Hg"
+		                    document.getElementById("spodnjiTlakNumber").innerHTML = res[res.length-1].diastolic;
+		                    preveri()
 					    },
 					});
 					
@@ -329,17 +341,21 @@ function preberiMeritveVitalnihZnakov() {
 					    success: function (res) {
 					    
 		                    document.getElementById('visina').innerHTML = "Vaša višina znaša " + res[res.length-1].height + " cm"
+		                    document.getElementById("visinaNumber").innerHTML = res[res.length-1].height;
+		                    preveri()
 					    },
 					});
-				
-				
-			$("#overall").show();
+					
+				$("#overall, #details, #friendlyTip").show();
+		
+			
 	
 				
 	    	},
 	    
 		});
 	}
+	
 }
 
 
@@ -412,6 +428,7 @@ $(document).ready(function() {
 
 
 //-----------------WIKI JSONP API
+function getWiki(){
 var url = "https://sl.wikipedia.org/wiki/Visok_krvni_tlak";  //to bomo spremenili tako da bo dobil spremenljivko v kateri je URL glede na kriterije
 var title = url.split("/");
 title = title[title.length - 1];
@@ -446,9 +463,10 @@ $.getJSON("https://sl.wikipedia.org/w/api.php?action=parse&page=" + title + "&pr
         }
         pText = pText.substring(0, pText.length - 2); //Remove extra newline
         pText = pText.replace(/\[\d+\]/g, ""); //Remove reference tags (e.x. [1], [4], etc)
-        //document.getElementById('wikiText').innerHTML = pText
+        document.getElementById('wikiText').innerHTML = pText
     }
 });
+}
 
 
 
