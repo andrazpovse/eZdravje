@@ -80,7 +80,7 @@ function kreirajEHRzaBolnika() {
 	var priimek = $("#kreirajPriimek").val();
 
 	if (!ime || !priimek ||  ime.trim().length == 0 ||
-      priimek.trim().length == 0 || datumRojstva.trim().length == 0) {
+      priimek.trim().length == 0 ) {
 		$("#kreirajSporocilo").html("<span class='obvestilo label " +
       "label-warning fade-in'>Prosim vnesite zahtevane podatke!</span>");
 	} else {
@@ -169,7 +169,7 @@ function dodajMeritveVitalnihZnakov() {
 	//var datumInUra = $("#dodajVitalnoDatumInUra").val();
 	var telesnaVisina = $("#dodajVitalnoTelesnaVisina").val();
 	var telesnaTeza = $("#dodajVitalnoTelesnaTeza").val();
-	var telesnaTemperatura = $("#dodajVitalnoTelesnaTemperatura").val();
+	var srcniUtrip = $("#dodajVitalnoSrcniUtrip").val();
 	var sistolicniKrvniTlak = $("#dodajVitalnoKrvniTlakSistolicni").val();
 	var diastolicniKrvniTlak = $("#dodajVitalnoKrvniTlakDiastolicni").val();
 	//var nasicenostKrviSKisikom = $("#dodajVitalnoNasicenostKrviSKisikom").val();
@@ -190,8 +190,9 @@ function dodajMeritveVitalnihZnakov() {
 		   // "ctx/time": datumInUra,
 		    "vital_signs/height_length/any_event/body_height_length": telesnaVisina,
 		    "vital_signs/body_weight/any_event/body_weight": telesnaTeza,
-		   	"vital_signs/body_temperature/any_event/temperature|magnitude": telesnaTemperatura,
-		    "vital_signs/body_temperature/any_event/temperature|unit": "°C",
+
+		    "vital_signs/pulse/any_event/rate|magnitude": srcniUtrip,
+		    "vital_signs/pulse/any_event/rate|unit":"/min",
 		    "vital_signs/blood_pressure/any_event/systolic": sistolicniKrvniTlak,
 		    "vital_signs/blood_pressure/any_event/diastolic": diastolicniKrvniTlak,
 		    //"vital_signs/indirect_oximetry:0/spo2|numerator": nasicenostKrviSKisikom
