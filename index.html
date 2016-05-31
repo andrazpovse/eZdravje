@@ -4,6 +4,7 @@
   <meta charset="utf-8">
   <title>eZdravje :: 4. DN :: OIS 2015/2016</title>
   <link href="knjiznice/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" type="text/css" href="knjiznice/css/jquery.qtip.css">
   <style>
     body {padding-top: 10px;}
     .row {
@@ -19,32 +20,19 @@
        text-align: center;
 
     }
-    #wiki{
-      position: initial;
-    }
-    #vitalneFunkcije{
+    #vitalneFunkcije, #tezaInVelikost{
       text-align: center;
     }
-    #tezaInVelikost{
-     text-align: center;
-    }
-    #visina{
-      float: left;
-    }
-    #teza{
-     float: right;
-    }
-    #srcniUtrip{
-      float: right;
-    }
-    #fillgauge3{
-      text-align: center;
-    }
+  
+   #izboljsave{
+     text-align: left;
+   }
 
   </style>
   <script src="knjiznice/js/jquery-2.2.3.min.js"></script>
   <script src="knjiznice/js/bootstrap.min.js"></script>
   <script src="knjiznice/js/koda.js"></script>
+  <script src="knjiznice/js/jquery.qtip.js"></script>
   
   
   <script src="https://d3js.org/d3.v3.min.js" language="JavaScript"></script>
@@ -158,13 +146,12 @@
 					<div class="panel-heading">
 						<div class="row">
 							<div class="col-lg-6 col-md-6 col-sm-6"><b>Pregled</b> meritev <b>vitalnih znakov</b> bolnika</div>
-							<div class="col-lg-3 col-md-3 col-sm-3"><select class="form-control input-sm" id="preberiTipZaVitalneZnake"><option value="telesna temperatura">telesna temperatura</option><option value="telesna temperatura AQL">telesna temperatura (filter na podhladitev)</option><option value="telesna teža">telesna teža</option></select></div>
 							<div class="col-lg-3 col-md-3 col-sm-3"><select class="form-control input-sm" id="preberiEhrIdZaVitalneZnake"><option value=""></option><option value="b931580f-2b05-488b-985b-8d9ffb08ad02">Ata Smrk</option><option value="d564c6a3-5a43-4fcc-bfa7-9ac76e9673bd">Pujsa Pepa</option></select></div>
 						</div>
 					</div>
 					<div class="panel-body">
 						<span class="label label-default">EHR ID</span><input id="meritveVitalnihZnakovEHRid" type="text" class="form-control input-mini" placeholder="7b661e12-3a98-21ad-c29e-2dc9f5a3d885">
-						<button type="button" class="btn btn-primary btn-xs" onclick="preberiMeritveVitalnihZnakov()">Preberi meritve vitalnih znakov</button><span id="preberiMeritveVitalnihZnakovSporocilo"></span>
+						<button type="button" class="btn btn-primary btn-xs" onclick="preberiMeritveVitalnihZnakov();">Preberi meritve vitalnih znakov</button>
 						<div id="rezultatMeritveVitalnihZnakov">
 						  
 						  
@@ -177,27 +164,18 @@
 						  
               <div id="details">
                   <div id="vitalneFunkcije">
-                      <h3> Vitalne funkcije</h3>
-                      <svg id="fillgauge3" width="32%" height="200">
-                        <text x="20" y="20" font-family="sans-serif" font-size="20px" fill="red">Hello!</text>
-                       
-                      </svg>
-                     <svg id="fillgauge2" width="32%" height="200" onclick=""></svg>
-                     <div id='srcniUtrip'>
+                      <h3> Vitalni podatki </h3>
+                      
+                      
+                       <svg id="fillgauge3" width="32%" height="200"></svg>
+                       <svg id="fillgauge2" width="32%" height="200" onclick=""></svg>
                        <svg id="fillgauge4" width="32%" height="200" onclick=""></svg> 
-                     </div>
-                     
                   </div>
                   <br>
                   <div id="tezaInVelikost">
                     <h3> Višina in teža</h3>
-                    <div id='visina'>
-                      <svg id="fillgauge5" width="48%" height="200" onclick=""></svg>
-                    </div>
-                    <div id='teza'>
+                      <svg id="fillgauge5" width="48%" height="200" onclick=""></svg>   
                       <svg id="fillgauge6" width="48%" height="200" onclick=""></svg>
-                    </div>
-                    
                   </div>
               </div>
               
@@ -212,6 +190,18 @@
                 
         
         <script language="JavaScript">
+        //pridobimo podatke o trenutnem pacientu
+
+        function zapisiPodatke(){
+           //nekako moram dobiti podatke o pacientu, ki jih lahko nato vstavim v graf
+           
+        }
+        
+        
+        
+        
+      
+        
             var configResult = liquidFillGaugeDefaultSettings();
             configResult.minValue = 1;
             configResult.maxValue = 100;
@@ -326,15 +316,23 @@
   				<div class="panel panel-default">
   					<div class="panel-heading">
   						<div class="row">
-  							<div class="col-lg-8 col-md-8 col-sm-8"><b>Izboljšajte</b> svoje <b>zdravje</b></div>
+  							<div class="col-lg-6 col-md-6 col-sm-6"><b>Izboljšajte</b> svoje <b>zdravje</b></div>
   							
   						</div>
   					</div>
   					<div class="panel-body">
-  					   <div id="wikiText">
-  					     
-  					   </div>
-  				
+    					<div id="izboljsave">
+                
+                <div id="utrip"></div>
+                <div id="zgornjiTlak"></div>
+                <div id="spodnjiTlak"></div>
+                <div id="visina"></div>
+                <div id="teza"></div>
+                
+                <div id="friendlyTip"> </div>
+    					  <div id="wikiText"></div>
+    					</div>
+    				
   				  </div>
   				</div>
   			</div>

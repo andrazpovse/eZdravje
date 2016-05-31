@@ -33,8 +33,66 @@ $(document).ready(function() {
 
 
 
-
-
+$(document).ready(function()   //qtipi, ki nam kažejo kaj prikazuje kateri diagram
+ {
+       $('#fillgauge2').qtip({   //prvi za spodnji krvni tlak----------------------------
+        content: {
+        text: 'Krvni tlak spodnji'
+    },
+        position: {
+        my: 'top center',  // Position my top left...
+        at: 'top center', // at the bottom right of...
+        target: $('#fillgauge2') // my target
+    },
+    
+         
+     });
+       $('#fillgauge3').qtip({  //krvni tlak zgornji ---------------------------------
+        content: {
+        text: 'Krvni tlak zgornji'
+    },
+        position: {
+        my: 'top center',  // Position my top left...
+        at: 'top center', // at the bottom right of...
+        target: $('#fillgauge3') // my target
+    }
+         
+     });
+       $('#fillgauge4').qtip({   // srčni utrip --------------------------------------
+        content: {
+        text: 'Srčni utrip'
+    },
+        position: {
+        my: 'top center',  // Position my top left...
+        at: 'top center', // at the bottom right of...
+        target: $('#fillgauge4') // my target
+    }
+         
+     });
+     $('#fillgauge5').qtip({  // višina -------------------------------------------
+        content: {
+        text: 'Višina'
+    },
+        position: {
+        my: 'top center',  // Position my top left...
+        at: 'top center', // at the bottom right of...
+        target: $('#fillgauge5') // my target
+    }
+         
+     });
+     
+      $('#fillgauge6').qtip({  // teža -------------------------------------------------------------
+        content: {
+        text: 'Teža'
+    },
+        position: {
+        my: 'top center',  // Position my top left...
+        at: 'top center', // at the bottom right of...
+        target: $('#fillgauge6') // my target
+    }
+         
+     });
+ });
 
 /**
  * Generator podatkov za novega pacienta, ki bo uporabljal aplikacijo. Pri
@@ -55,11 +113,14 @@ function generirajPodatke(stPacienta) {
 
 // TODO: Tukaj implementirate funkcionalnost, ki jo podpira vaša aplikacija
 
-
+    
 $(document).ready(function(){
-    $("#details").hide();
+$("#details").hide();
+$("#overall").hide();
+
     $("#overall").click(function(){
         $("#details").show();
+        
     });
    
 });
@@ -122,39 +183,6 @@ function kreirajEHRzaBolnika() {
 }
 
 
-/**
- * Za podan EHR ID preberi demografske podrobnosti pacienta in izpiši sporočilo
- * s pridobljenimi podatki (ime, priimek in datum rojstva).
- */
-function preberiEHRodBolnika() {
-	sessionId = getSessionId();
-
-	var ehrId = $("#preberiEHRid").val();
-
-	if (!ehrId || ehrId.trim().length == 0) {
-		$("#preberiSporocilo").html("<span class='obvestilo label label-warning " +
-      "fade-in'>Prosim vnesite zahtevan podatek!");
-	} else {
-		$.ajax({
-			url: baseUrl + "/demographics/ehr/" + ehrId + "/party",
-			type: 'GET',
-			headers: {"Ehr-Session": sessionId},
-	    	success: function (data) {
-				var party = data.party;
-				$("#preberiSporocilo").html("<span class='obvestilo label " +
-          "label-success fade-in'>Bolnik '" + party.firstNames + " " +
-          party.lastNames + "', ki se je rodil '" + party.dateOfBirth +
-          "'.</span>");
-			},
-			error: function(err) {
-				$("#preberiSporocilo").html("<span class='obvestilo label " +
-          "label-danger fade-in'>Napaka '" +
-          JSON.parse(err.responseText).userMessage + "'!");
-			}
-		});
-	}
-}
-
 
 /**
  * Za dodajanje vitalnih znakov pacienta je pripravljena kompozicija, ki
@@ -190,7 +218,6 @@ function dodajMeritveVitalnihZnakov() {
 		   // "ctx/time": datumInUra,
 		    "vital_signs/height_length/any_event/body_height_length": telesnaVisina,
 		    "vital_signs/body_weight/any_event/body_weight": telesnaTeza,
-
 		    "vital_signs/pulse/any_event/rate|magnitude": srcniUtrip,
 		    "vital_signs/pulse/any_event/rate|unit":"/min",
 		    "vital_signs/blood_pressure/any_event/systolic": sistolicniKrvniTlak,
@@ -224,70 +251,93 @@ function dodajMeritveVitalnihZnakov() {
 
 
 /**
- * Pridobivanje vseh zgodovinskih podatkov meritev izbranih vitalnih znakov
- * (telesna temperatura, filtriranje telesne temperature in telesna teža).
- * Filtriranje telesne temperature je izvedena z AQL poizvedbo, ki se uporablja
- * za napredno iskanje po zdravstvenih podatkih.
+ Pridobivanje podatkov o pacientu in jih prikazati v animiranem grafu, hkrati pa na desni strani prikazati napotke za stranko
  */
+
 function preberiMeritveVitalnihZnakov() {
 	sessionId = getSessionId();
 
 	var ehrId = $("#meritveVitalnihZnakovEHRid").val();
-	var tip = $("#preberiTipZaVitalneZnake").val();
 
-	if (!ehrId || ehrId.trim().length == 0 || !tip || tip.trim().length == 0) {
+
+	if (!ehrId || ehrId.trim().length == 0 ) {
 		$("#preberiMeritveVitalnihZnakovSporocilo").html("<span class='obvestilo " +
       "label label-warning fade-in'>Prosim vnesite zahtevan podatek!");
 	} else {
+	    
+	
 		$.ajax({
 			url: baseUrl + "/demographics/ehr/" + ehrId + "/party",
 	    	type: 'GET',
 	    	headers: {"Ehr-Session": sessionId},
 	    	success: function (data) {
 				var party = data.party;
-				$("#rezultatMeritveVitalnihZnakov").html("<br/><span>Pridobivanje " +
-          "podatkov za <b>'" + tip + "'</b> bolnika <b>'" + party.firstNames +
-          " " + party.lastNames + "'</b>.</span><br/><br/>");
 				
-				// if (tip == "telesna teža") {
+
+				//pridobimo srcni utrip
+					$.ajax({
+					    url: baseUrl + "/view/" + ehrId + "/" + "pulse",
+					    type: 'GET',
+					    headers: {"Ehr-Session": sessionId},
+					    success: function (res) {
 				
+					      document.getElementById('utrip').innerHTML = "Vaš srčni utrip znaša " + res[res.length-1].pulse + " /min"
+					     
+					    },
+					});
+
+				
+				
+				//zacetek ajaxa za tezo
 					$.ajax({
 					    url: baseUrl + "/view/" + ehrId + "/" + "weight",
 					    type: 'GET',
 					    headers: {"Ehr-Session": sessionId},
 					    success: function (res) {
-					    	if (res.length > 0) {
-						    	var results = "<table class='table table-striped " +
-                    "table-hover'><tr><th>Datum in ura</th>" +
-                    "<th class='text-right'>Telesna teža</th></tr>";
-                    alert(res[res.length-1].weight );   //to je najnovejsi podatek
-                    
-						        for (var i in res) {
-						            results += "<tr><td>" + res[i].time +
-                          "</td><td class='text-right'>" + res[i].weight + " " 	+
-                          res[i].unit + "</td>";
-						        }
-						        results += "</table>";
-						        $("#rezultatMeritveVitalnihZnakov").append(results);
-					    	} else {
-					    		$("#preberiMeritveVitalnihZnakovSporocilo").html(
-                    "<span class='obvestilo label label-warning fade-in'>" +
-                    "Ni podatkov!</span>");
-					    	}
+					    
+		                    document.getElementById('teza').innerHTML = "Vaša teža znaša " + res[res.length-1].weight + " kg"
 					    },
-					    error: function() {
-					    	$("#preberiMeritveVitalnihZnakovSporocilo").html(
-                  "<span class='obvestilo label label-danger fade-in'>Napaka '" +
-                  JSON.parse(err.responseText).userMessage + "'!");
-					    }
 					});
-				//}
+					
+					//zacetek ajaxa za zgornji tlak
+						$.ajax({
+					    url: baseUrl + "/view/" + ehrId + "/" + "blood_pressure",
+					    type: 'GET',
+					    headers: {"Ehr-Session": sessionId},
+					    success: function (res) {
+					    
+		                    document.getElementById('zgornjiTlak').innerHTML = "Vaš zgornji krvni pritisk znaša " + res[res.length-1].systolic + " mm Hg"
+					    },
+					});
+					
+					//zacetek ajaxa za spodnji tlak
+						$.ajax({
+					    url: baseUrl + "/view/" + ehrId + "/" + "blood_pressure",
+					    type: 'GET',
+					    headers: {"Ehr-Session": sessionId},
+					    success: function (res) {
+					    
+		                    document.getElementById('spodnjiTlak').innerHTML = "Vaš spodnji krvni pritisk znaša  " + res[res.length-1].diastolic + " mm Hg"
+					    },
+					});
+					
+					//zacetek ajaxa za višino
+						$.ajax({
+					    url: baseUrl + "/view/" + ehrId + "/" + "height",
+					    type: 'GET',
+					    headers: {"Ehr-Session": sessionId},
+					    success: function (res) {
+					    
+		                    document.getElementById('visina').innerHTML = "Vaša višina znaša " + res[res.length-1].height + " cm"
+					    },
+					});
+				
+				
+			$("#overall").show();
+	
+				
 	    	},
-	    	error: function(err) {
-	    		$("#preberiMeritveVitalnihZnakovSporocilo").html(
-            "<span class='obvestilo label label-danger fade-in'>Napaka '" +
-            JSON.parse(err.responseText).userMessage + "'!");
-	    	}
+	    
 		});
 	}
 }
@@ -345,7 +395,7 @@ $(document).ready(function() {
    */
 	$('#preberiEhrIdZaVitalneZnake').change(function() {
 		$("#preberiMeritveVitalnihZnakovSporocilo").html("");
-		$("#rezultatMeritveVitalnihZnakov").html("");
+		//$("#rezultatMeritveVitalnihZnakov").html("");
 		$("#meritveVitalnihZnakovEHRid").val($(this).val());
 	});
 
@@ -396,10 +446,9 @@ $.getJSON("https://sl.wikipedia.org/w/api.php?action=parse&page=" + title + "&pr
         }
         pText = pText.substring(0, pText.length - 2); //Remove extra newline
         pText = pText.replace(/\[\d+\]/g, ""); //Remove reference tags (e.x. [1], [4], etc)
-        document.getElementById('wikiText').innerHTML = pText
+        //document.getElementById('wikiText').innerHTML = pText
     }
 });
-
 
 
 

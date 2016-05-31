@@ -45,11 +45,12 @@
           </div>
           <div class="panel-body">
             <!-- ZAČETEK: Opis ideje, ki jo aplikacija podpira -->
-            <p><strong>TO-DO</strong>: Na tem mestu je potrebno dodati <strong>osnovni opis ideje rešitve</strong> (kakšen je osnovni SCENARIJ UPORABE, KDO je ciljna publika, za kakšen NAMEN se aplikacija uporablja).
-            <br><br>
-            Aplikacija "Vaše zdravstveno stanje 6.0" vam grafično pokaže (glede na višino pritiska, utripa) podatke o vašem srčnem utripu, pritisku, višini, teži in ITM-u, ter vam na podlagi njih svetuje. Namen je ocenitev vašega trenutnega zdravstvenega stanja in priporočila za izboljšave. Ciljna publika je celotna populacija.
             
-            </p><p class="text-muted">Opis naj ne bo daljši od 200 besed.</p>
+            Aplikacija "Vaše zdravstveno stanje 6.0" vam grafično pokaže (glede na višino pritiska, utripa) podatke o vašem srčnem utripu, pritisku, višini, teži in splošnemu zdravju,
+            ter vam na podlagi njih svetuje. Namen je ocenitev vašega trenutnega zdravstvenega stanja in priporočila za izboljšave. Ciljna publika je celotna populacija, ki lahko na ta način
+            dnevno spremlja svoje zdravje in vidi kje bi lahko bile prisotne izboljšave na podlagi osebnega zdravja.
+            
+      
             <!-- KONEC: Opis ideje, ki jo aplikacija podpira -->
           </div>
         </div>
@@ -59,10 +60,13 @@
           </div>
           <div class="panel-body">
             <!-- ZAČETEK: Uporabljeni zunanji viri podatkov -->
-            <p><strong>TO-DO</strong>: Na tem mestu je navesti zunanji vir podatkov (URL naslov), na kakšen način ste ga uporabili (neposredni API klic, uvožena statična datoteka ipd.) in kaj je bil namen uporabe (kako se vključuje v osnovno idejo aplikacije).
-            <br><br>
             
-            to add - youtube, mogoce kaksni linki iz drugs.com, etc.
+            
+            
+            Kot znanji vir podatkov sem uporabil Wikipedio, na podlagi katere sem ugotovil "zdrave vrednosti" posameznega podatka o pacientu. 
+            Kot neposredni podatek v živo pa sem uporabil API klic na Wikipedio, preko katerega sem dobil Opis članka v Json obliki, katerega sem vključil kot besedilo v aplikaciji.
+            <br>
+            Namen je prikazati podrobnosti o podatku, ki je pri določenem pacientu dosegel slabo oceno (previsok krvni tlak, teža, srčni utrip, ...).
             
             </p>
             <!-- KONEC: Uporabljeni zunanji viri podatkov -->
@@ -74,12 +78,9 @@
           </div>
           <div class="panel-body">
             <!-- ZAČETEK: Master/detail načrtovalski vzorec -->
-            <p><strong>TO-DO</strong>: Na tem mestu morate navesti uporabljen master/detail načrtovalski vzorec in na kakšen način ga nameravate uporabiti.</p>
-            <br><br>
-            Master -> vitalni znaki, ITM
-            Detail -> pritisk, srčni urtip ..... višina,teža
-            
-            Uporabljen bo kot razširitev podatkov. Na zaslonu imamo prikazano našo oceno vitalnih znakov, če želimo izvedeti še natančne podatke gremo v detail.
+  
+            Master/detail vzorec, ki je v uporabi je splošna ocena zdravja na lestvici od 1 do 100 (ki služi kot master) in pa detail, ki se nam prikaže ob kliku
+            na master diagram. Detail vzorec nam prikaže vse podatke o pacientu, ki smo jih zbrali (t.j. utrip, krvni pritisk, teža, višina).
             
             <!-- KONEC: Master/detail načrtovalski vzorec -->
           </div>
