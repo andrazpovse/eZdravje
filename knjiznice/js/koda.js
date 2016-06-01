@@ -179,12 +179,17 @@ function kreirajEHRzaBolnika() {
 	}
 }
 
+
 var stevec = 0;
+
 function preveri(){   //preverimo ali smo pridobili vse podatke, preden gremo naprej in prikazemo graficni prikaz
-    stevec++;
-    if (stevec == 5)
+   stevec++;
+
+    if (stevec == 5){
         zakasnitev();
-    
+        stevec = 0;
+    }
+  
 }
 
 /**
@@ -289,6 +294,7 @@ function preberiMeritveVitalnihZnakov() {
 					      document.getElementById('utrip').innerHTML = "Vaš srčni utrip znaša " + res[res.length-1].pulse + " /min" + hint;
 					      document.getElementById('utripNumber').innerHTML = res[res.length-1].pulse;
 					      preveri()   //pri vsakem klicu gremo v funkcijo "preveri", katera caka da se izvedejo vsi tej klici, potem pa nadaljuje z graficnim prikazom
+					      
 					    },
 					});
 
