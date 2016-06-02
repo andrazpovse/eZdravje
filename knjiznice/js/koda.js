@@ -119,7 +119,7 @@ function narediPaciente(i) {
                 		    contentType: 'application/json',
                 		    data: JSON.stringify(podatki),
                 		    success: function (res) {
-                		        document.getElementById("kreiraniEHRji").innerHTML += "<p class='bg-success'> <b>Generiran vpis:</b> "+ime+" "+priimek+",<b> EHR-Id:</b> "+ ehrId + "</p><br>"
+                		        document.getElementById("kreiraniEHRji").innerHTML += "<p class='bg-success'> <b>Generiran vpis:</b> "+ime+" "+priimek+",<b> EHR-Id:</b> "+ ehrId + "</p>"
                 		    },
                 		    
  
