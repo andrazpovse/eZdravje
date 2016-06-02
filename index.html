@@ -69,7 +69,7 @@
         <ul class="nav navbar-nav">
           <li><a href="opis.html">Opis ideje</a></li>
           <li><a href="nacrt.html">Načrt informacijske rešitve</a></li>
-          <li><a href="#">Generiranje podatkov</a></li>
+          <li><a onclick="generirajPodatke()" href="#">Generiranje podatkov</a></li>
         </ul>
       </div>
     </div>
@@ -91,32 +91,22 @@
 					<div class="panel-heading">
 						<div class="row">
 							<div class="col-lg-6 col-md-6 col-sm-6"><b>Kreiraj EHR zapis</b> za novega bolnika</div>
-							<div class="col-lg-3 col-md-3 col-sm-3"><select class="form-control input-sm" id="preberiPredlogoBolnika"><option value=""></option><option value="Pujsa,Pepa,1938-10-30T14:58">Pujsa Pepa</option></select></div>
 						</div>
 					</div>
 					<div class="panel-body">
-						<span class="label label-default">Ime</span><input id="kreirajIme" type="text" class="form-control input-mini" placeholder="Osama">
-						<span class="label label-default">Priimek</span><input id="kreirajPriimek" type="text" class="form-control" placeholder="Bin Laden">
+						<span class="label label-default">Ime</span><input id="kreirajIme" type="text" class="form-control input-mini" placeholder="Bernie">
+						<span class="label label-default">Priimek</span><input id="kreirajPriimek" type="text" class="form-control" placeholder="Trump">
 						
-
+						<div id="kreiraniEHRji">
+						  
+						  
+						</div>
+						
 						<button type="button" class="btn btn-primary btn-xs" onclick="kreirajEHRzaBolnika()">Kreiraj EHR-ID</button><span id="kreirajSporocilo"></span>
 				  	</div>
 				</div>
 			</div>
-		<!--	<div class="col-lg-6 col-md-6 col-sm-6">
-				<div class="panel panel-default">
-					<div class="panel-heading">
-						<div class="row">
-							<div class="col-lg-8 col-md-8 col-sm-8"><b>Preberi EHR zapis</b> obstoječega bolnika</div>
-							<div class="col-lg-4 col-md-4 col-sm-4"><select class="form-control input-sm" id="preberiObstojeciEHR"><option value=""></option><option value="254f791d-2e7c-49d9-b646-376f62d6ead5">Dejan Lavbič</option><option value="d564c6a3-5a43-4fcc-bfa7-9ac76e9673bd">Pujsa Pepa</option><option value="b931580f-2b05-488b-985b-8d9ffb08ad02">Ata Smrk</option></select></div>
-						</div>
-					</div>
-					<div class="panel-body">
-						<span class="label label-default">EHR ID</span><input id="preberiEHRid" type="text" class="form-control input-mini" placeholder="7b661e12-3a98-21ad-c29e-2dc9f5a3d885">
-						<button type="button" class="btn btn-primary btn-xs" onclick="preberiEHRodBolnika()">Preberi osnovne podatke o bolniku</button><span id="preberiSporocilo"></span>
-				  	</div>
-				</div>
-			</div> -->
+
 		</div>
 	
 			<div class="col-lg-6 col-md-6 col-sm-6">
@@ -124,18 +114,15 @@
 					<div class="panel-heading">
 						<div class="row">
 							<div class="col-lg-6 col-md-6 col-sm-6"><b>Vnos</b> meritve <b>vitalnih znakov</b> bolnika</div>
-							<div class="col-lg-3 col-md-3 col-sm-3"><select class="form-control input-sm" id="preberiObstojeciVitalniZnak"><option value=""></option><option value="b931580f-2b05-488b-985b-8d9ffb08ad02|2014-11-21T11:40Z|185|80.0|36.50|118|92|98|medicinska sestra Smrketa">Ata Smrk</option></select></div>
 						</div>
 					</div>
 					<div class="panel-body">
 						<span class="label label-default">EHR ID</span><input id="dodajVitalnoEHR" type="text" class="form-control input-mini" placeholder="7b661e12-3a98-21ad-c29e-2dc9f5a3d885">
-					<!--	<span class="label label-default">Datum in ura</span><input id="dodajVitalnoDatumInUra" type="text" class="form-control input-mini" placeholder="2014-11-21T11:40Z"> -->
 						<span class="label label-default">Telesna višina</span><div class="input-group"><input id="dodajVitalnoTelesnaVisina" type="text" class="form-control input-mini" placeholder="185"><span class="input-group-addon">cm</span></div>
 						<span class="label label-default">Telesna teža</span><div class="input-group"><input id="dodajVitalnoTelesnaTeza" type="text" class="form-control input-mini" placeholder="80.00"><span class="input-group-addon">kg</span></div>
 						<span class="label label-default">Srčni utrip</span><div class="input-group"><input id="dodajVitalnoSrcniUtrip" type="text" class="form-control input-mini" placeholder="75"><span class="input-group-addon">/min</span></div>
 						<span class="label label-default">Sistolični krvni tlak</span><div class="input-group"><input id="dodajVitalnoKrvniTlakSistolicni" type="text" class="form-control input-mini" placeholder="118"><span class="input-group-addon">mm Hg</span></div>
 						<span class="label label-default">Diastolični krvni tlak</span><div class="input-group"><input id="dodajVitalnoKrvniTlakDiastolicni" type="text" class="form-control input-mini" placeholder="92"><span class="input-group-addon">mm Hg</span></div>
-					<!--	<span class="label label-default">Nasičenost krvi s kisikom</span><div class="input-group"><input id="dodajVitalnoNasicenostKrviSKisikom" type="text" class="form-control input-mini" placeholder="98"><span class="input-group-addon">%</span></div>  -->
 						<button type="button" class="btn btn-primary btn-xs" onclick="dodajMeritveVitalnihZnakov()">Dodaj meritve vitalnih znakov</button><span id="dodajMeritveVitalnihZnakovSporocilo"></span>
 				  	</div>
 				</div>
@@ -146,35 +133,37 @@
 					<div class="panel-heading">
 						<div class="row">
 							<div class="col-lg-6 col-md-6 col-sm-6"><b>Pregled</b> meritev <b>vitalnih znakov</b> bolnika</div>
-							<div class="col-lg-3 col-md-3 col-sm-3"><select class="form-control input-sm" id="preberiEhrIdZaVitalneZnake"><option value=""></option><option value="b931580f-2b05-488b-985b-8d9ffb08ad02">Ata Smrk</option><option value="d564c6a3-5a43-4fcc-bfa7-9ac76e9673bd">Pujsa Pepa</option></select></div>
+							<div class="col-lg-3 col-md-3 col-sm-3"><select class="form-control input-sm" id="preberiEhrIdZaVitalneZnake"><option value=""></option><option value="65bdf041-44f1-4b53-af7d-260df3901a5c">Kronični Bolnik</option><option value="1dafc5e6-d772-489f-bec7-18c2360abe76">Poškodovana oseba</option><option value="7f9fc320-d629-469b-8034-7e2c6630be04">Zdrava oseba</option></select></div>
 						</div>
 					</div>
 					<div class="panel-body">
 						<span class="label label-default">EHR ID</span><input id="meritveVitalnihZnakovEHRid" type="text" class="form-control input-mini" placeholder="7b661e12-3a98-21ad-c29e-2dc9f5a3d885">
-						<button type="button" class="btn btn-primary btn-xs" onclick="preberiMeritveVitalnihZnakov(); getWiki();">Preberi meritve vitalnih znakov</button>
+						<button type="button" class="btn btn-primary btn-xs" onclick="preberiMeritveVitalnihZnakov(); ">Preberi meritve vitalnih znakov</button>
 						<div id="rezultatMeritveVitalnihZnakov">
 						  
 						  
 						  
 						  <!----GRAFICNI PRIKAZ !-->
-						  <div id="overall">
-						    <h3> Vaše zdravje na lestvici 1 - 100<br> </h3>
-						    <svg id="fillgauge1"  width="97%" height="250" onclick=""></svg>
-						  </div>
-						  
-              <div id="details">
-                  <div id="vitalneFunkcije">
-                      <h3> Vitalni podatki </h3>
-                       <svg id="fillgauge3" width="32%" height="200"></svg>
-                       <svg id="fillgauge2" width="32%" height="200" onclick=""></svg>
-                       <svg id="fillgauge4" width="32%" height="200" onclick=""></svg> 
-                  </div>
-                  <br>
-                  <div id="tezaInVelikost">
-                    <h3> Višina in teža</h3>
-                      <svg id="fillgauge5" width="48%" height="200" onclick=""></svg>   
-                      <svg id="fillgauge6" width="48%" height="200" onclick=""></svg>
-                  </div>
+						  <div id="bubbles">
+  						  <div id="overall">
+  						    <h3> Vaše zdravje na lestvici 1 - 100<br> </h3>
+  						    <svg id="fillgauge1"  width="97%" height="250" onclick=""></svg>
+  						  </div>
+  						  
+                <div id="details">
+                    <div id="vitalneFunkcije">
+                        <h3> Vitalni podatki </h3>
+                         <svg id="fillgauge3" width="32%" height="200"></svg>
+                         <svg id="fillgauge2" width="32%" height="200" onclick=""></svg>
+                         <svg id="fillgauge4" width="32%" height="200" onclick=""></svg> 
+                    </div>
+                    <br>
+                    <div id="tezaInVelikost">
+                      <h3> Višina in teža</h3>
+                        <svg id="fillgauge5" width="48%" height="200" onclick=""></svg>   
+                        <svg id="fillgauge6" width="48%" height="200" onclick=""></svg>
+                    </div>
+                </div>
               </div>
               
            
@@ -190,7 +179,7 @@
         <script language="JavaScript">
         //pridobimo podatke o trenutnem pacientu
         function setVisibleText(){
-          $("#wikiText").show();
+          $("#wikiDetails").show();
         }
        
            //nekako moram dobiti podatke o pacientu, ki jih lahko nato vstavim v graf
@@ -204,18 +193,37 @@
         
         
          function zakasnitev(){
+          
+           document.getElementById('bubbles').innerHTML = '<div id="overall"> <h3> Vaše zdravje na lestvici 1 - 100<br> </h3> <svg id="fillgauge1"  width="97%" height="250" onclick=""></svg> </div>  <div id="details">               <div id="vitalneFunkcije">  <h3> Vitalni podatki </h3> <svg id="fillgauge3" width="32%" height="200"></svg>     <svg id="fillgauge2" width="32%" height="200" onclick=""></svg>    <svg id="fillgauge4" width="32%" height="200" onclick=""></svg>  </div> <br> <div id="tezaInVelikost"> <h3> Višina in teža</h3>       <svg id="fillgauge5" width="48%" height="200" onclick=""></svg>     <svg id="fillgauge6" width="48%" height="200" onclick=""></svg>     </div>   </div>';
+           //spet naredimo innerHTML grafe...
            
            
-           
-           
-           
-           srcniUtrip = document.getElementById("utripNumber").innerHTML;
+            srcniUtrip = document.getElementById("utripNumber").innerHTML;
             teza = document.getElementById("tezaNumber").innerHTML;
-           visina = document.getElementById("visinaNumber").innerHTML;
+            visina = document.getElementById("visinaNumber").innerHTML;
             spodnjiTlak = document.getElementById("spodnjiTlakNumber").innerHTML;
             zgornjiTlak = document.getElementById("zgornjiTlakNumber").innerHTML;
               
-            var povprecnoZdravje;
+              if (srcniUtrip == 0){
+                getWiki("https://sl.wikipedia.org/wiki/Smrt", "wikiTextDeath", "<b> Smrt: </b><br> ")
+              }
+              if (zgornjiTlak > 140 || spodnjiTlak > 90){
+                	getWiki('https://sl.wikipedia.org/wiki/Visok_krvni_tlak', "wikiTextBloodPressure", "<b> Krvni pritisk: </b><br>");
+              }
+              
+              var itm = (teza / ((visina/100) * (visina/100)));
+              if (itm > 25){
+                getWiki("https://sl.wikipedia.org/wiki/Indeks_telesne_mase", "wikiTextItm", "<b> ITM (indeks telesne mase): </b><br>")
+                getWiki("https://sl.wikipedia.org/wiki/Debelost", "wikiTextTveganja", "<b> Možna tveganja: </b><br>");
+              }
+              else if(itm < 20){
+                 getWiki("https://sl.wikipedia.org/wiki/Indeks_telesne_mase", "wikiTextItm", "<b> ITM (indeks telesne mase): </b><br>")
+                getWiki("https://sl.wikipedia.org/wiki/Anoreksija", "wikiTextTveganja", "<b> Možna tveganja: </b><br>");
+                
+              }
+              var ocenaGledeItm = (itm/22)*100;
+              var ocenaSrcnegaUtripa = (srcniUtrip/70)
+            var povprecnoZdravje  ;
             
          
             
@@ -240,7 +248,18 @@
             config1.textVertPosition = 0.2;
             config1.waveAnimateTime = 600;  
             config1.minValue = 30;  //tukaj lahko tudi prilagajamo glede na pritisk, gledamo kot krogec kot zilo -> polna -> prevelik pritisk
-            config1.maxValue = 140;
+            config1.maxValue = 148;
+            
+             var configSpodnji = liquidFillGaugeDefaultSettings();
+            configSpodnji.circleColor = "#FF7777";
+            configSpodnji.textColor = "#FF4444";
+            configSpodnji.waveTextColor = "#FFAAAA";
+            configSpodnji.waveColor = "#FFDDDD";
+            configSpodnji.circleThickness = 0.2;
+            configSpodnji.textVertPosition = 0.2;
+            configSpodnji.waveAnimateTime = 600;  
+            configSpodnji.minValue = 30;  //tukaj lahko tudi prilagajamo glede na pritisk, gledamo kot krogec kot zilo -> polna -> prevelik pritisk
+            configSpodnji.maxValue = 98;
             
             var config2 = liquidFillGaugeDefaultSettings();
             config2.circleColor = "#cc2900";
@@ -250,21 +269,23 @@
             config2.circleThickness = 0.1;
             config2.circleFillGap = 0.2;
             config2.textVertPosition = 0.8;
+            config2.waveCount = 1;
+            config2.waveHeight = 0.4;
             config2.waveAnimateTime = 60000/srcniUtrip;    //damo spremenljivko namesto 60 in potem ce je utrip majhen gre pocasi, ce je vecji hitreje
             config2.circleThickness = 0.2;
             config2.minValue = 80; //na sredini nekje valovanje
             config2.maxValue = 300;
             
             var gauge2= loadLiquidFillGauge("fillgauge2", zgornjiTlak, config1);  //zgornji tlak
-            var gauge3 = loadLiquidFillGauge("fillgauge3", spodnjiTlak, config1); //spodnji tlak
+            var gauge3 = loadLiquidFillGauge("fillgauge3", spodnjiTlak, configSpodnji); //spodnji tlak
             var gauge4 = loadLiquidFillGauge("fillgauge4", srcniUtrip, config2);  //srcni utrip
 
             var configTeza = liquidFillGaugeDefaultSettings();
             configTeza.circleThickness = 0.4;
             configTeza.circleColor = "#808015";
             configTeza.textColor = "#555500";
-            configTeza.waveTextColor = "#FFFFAA";
-            configTeza.waveColor = "#AAAA39";
+            configTeza.waveTextColor = "#555500";
+            configTeza.waveColor = "ffffff";
             configTeza.textVertPosition = 0.52;
             configTeza.waveAnimateTime = 5000;
             configTeza.waveHeight = 0;
@@ -317,11 +338,17 @@
                   <div id="tezaNumber" style="visibility: hidden"></div>
                 
                 <div id="friendlyTip"> 
-                  <button type="button" class="btn btn-info" onclick="setVisibleText()">Preberite več o vaši težavi</button>
+                  <button type="button" class="btn btn-info" onclick="setVisibleText();">Preberite kaj ni optimalno</button>
                </div>
-    					  <div id="wikiText"></div>
-    					  </div>
-    				
+               
+               
+              <div id="wikiDetails">
+                 <div id="wikiTextDeath"></div>
+      					 <div id="wikiTextBloodPressure"> </div>
+      					 <div id="wikiTextItm"></div>
+      					 <div id="wikiTextTveganja"></div>
+    			    </div>
+    					 </div>
   				  </div>
   				</div>
   			</div>

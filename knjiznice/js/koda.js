@@ -33,10 +33,12 @@ $(document).ready(function()
  {
      
      
-     $("#wikiText, #friendlyTip").hide();
+     $("#wikiDetails").hide();
+     $("#friendlyTip").hide();
      
      
-     $("#overall, #details").hide();
+     $("#overall").hide();
+     $("#details").hide();
      
      
    
@@ -111,12 +113,12 @@ $(document).ready(function()
  * @param stPacienta zaporedna številka pacienta (1, 2 ali 3)
  * @return ehrId generiranega pacienta
  */
-function generirajPodatke(stPacienta) {
-  ehrId = "";
+function generirajPodatke() {
+  //tukaj bomo dodali generične paciente (kot študenti)
 
   // TODO: Potrebno implementirati
 
-  return ehrId;
+
 }
 
 
@@ -186,6 +188,7 @@ function preveri(){   //preverimo ali smo pridobili vse podatke, preden gremo na
    stevec++;
 
     if (stevec == 5){
+    	document.getElementById('bubbles').innerHTML = '';
         zakasnitev();
         stevec = 0;
     }
@@ -288,11 +291,19 @@ function preberiMeritveVitalnihZnakov() {
 					    type: 'GET',
 					    headers: {"Ehr-Session": sessionId},
 					    success: function (res) {
-				        var hint = "";
+				        var hintUtrip = "<br>";
+				        
 				        if (res[res.length-1].pulse > 100)
-				            hint=' POZOR your heart is racing'
-					      document.getElementById('utrip').innerHTML = "Vaš srčni utrip znaša " + res[res.length-1].pulse + " /min" + hint;
+				        	hintUtrip += "<p class='bg-danger'>Vaš srčni utrip je povišan. Optimalen srčni utrip znaša 50 - 100 /min</p>"
+				    	else if (res[res.length-1].pulse < 50)
+				            hintUtrip += "<p class='bg-danger'>Vaš srčni utrip je nizek. Optimalen srčni utrip znaša 50 - 100 /min/p>"
+				          else
+				        	hintUtrip += "<p class='bg-success'> Vaš srčni utrip je optimalen </p>"
+				            
+					      document.getElementById('utrip').innerHTML = "Vaš srčni utrip znaša " + res[res.length-1].pulse + " /min" + hintUtrip;
 					      document.getElementById('utripNumber').innerHTML = res[res.length-1].pulse;
+					     
+					      
 					      preveri()   //pri vsakem klicu gremo v funkcijo "preveri", katera caka da se izvedejo vsi tej klici, potem pa nadaljuje z graficnim prikazom
 					      
 					    },
@@ -306,8 +317,9 @@ function preberiMeritveVitalnihZnakov() {
 					    type: 'GET',
 					    headers: {"Ehr-Session": sessionId},
 					    success: function (res) {
+					   
 					    
-		                    document.getElementById('teza').innerHTML = "Vaša teža znaša " + res[res.length-1].weight + " kg"
+		                    document.getElementById('teza').innerHTML = "<p class='bg-info'>Vaša teža znaša " + res[res.length-1].weight + " kg </p>"
 		                    document.getElementById('tezaNumber').innerHTML = res[res.length-1].weight;
 		                    preveri()
 					    },
@@ -319,10 +331,20 @@ function preberiMeritveVitalnihZnakov() {
 					    type: 'GET',
 					    headers: {"Ehr-Session": sessionId},
 					    success: function (res) {
-					    
-		                    document.getElementById('zgornjiTlak').innerHTML = "Vaš zgornji krvni pritisk znaša " + res[res.length-1].systolic + " mm Hg"
+					     var hintTlak = "<br>";
+					     
+					    	if (res[res.length-1].systolic > 140)
+					    		hintTlak += " <p class='bg-danger'>Vaš zgornji krvni tlak je povišan. Optimalen sistolični tlak znaša 100 - 140 mm Hg</p>"
+					    	else if (res[res.length-1].systolic < 100)
+					    		hintTlak += " <p class='bg-danger'>Vaš zgornji krvni tlak je nizek. Optimalen sistolični tlak znaša 100 - 140 mm Hg</p>"
+					    	else
+					    		hintTlak += "<p class='bg-success'>Vaš zgornji krvni tlak je optimalen </p>"
+					    	
+					    	
+		                    document.getElementById('zgornjiTlak').innerHTML = "Vaš zgornji krvni pritisk znaša " + res[res.length-1].systolic + " mm Hg" + hintTlak
 		                    document.getElementById("zgornjiTlakNumber").innerHTML = res[res.length-1].systolic;
 		                    preveri()
+		                    
 					    },
 					});
 					
@@ -332,8 +354,15 @@ function preberiMeritveVitalnihZnakov() {
 					    type: 'GET',
 					    headers: {"Ehr-Session": sessionId},
 					    success: function (res) {
-					    
-		                    document.getElementById('spodnjiTlak').innerHTML = "Vaš spodnji krvni pritisk znaša  " + res[res.length-1].diastolic + " mm Hg"
+					    	var hintSpodnji = "<br>"
+					    	
+					    	if (res[res.length-1].diastolic > 90)
+					    		hintSpodnji += " <p class='bg-danger'>Vaš spodnji krvni tlak je povišan. Optimalen diastolični tlak znaša 60 - 90 mm Hg</p>"
+					    	else if (res[res.length-1].systolic < 60)
+					    		hintSpodnji += " <p class='bg-danger'>Vaš spodnji krvni tlak je nizek. Optimalen diastolični tlak znaša 60 - 90 mm Hg</p>"
+					    	else
+					    		hintSpodnji += "<p class='bg-success'>Vaš spodnji krvni tlak je optimalen </p>"
+		                    document.getElementById('spodnjiTlak').innerHTML = "Vaš spodnji krvni pritisk znaša  " + res[res.length-1].diastolic + " mm Hg" + hintSpodnji
 		                    document.getElementById("spodnjiTlakNumber").innerHTML = res[res.length-1].diastolic;
 		                    preveri()
 					    },
@@ -346,7 +375,7 @@ function preberiMeritveVitalnihZnakov() {
 					    headers: {"Ehr-Session": sessionId},
 					    success: function (res) {
 					    
-		                    document.getElementById('visina').innerHTML = "Vaša višina znaša " + res[res.length-1].height + " cm"
+		                    document.getElementById('visina').innerHTML = "<p class='bg-info'>Vaša višina znaša " + res[res.length-1].height + " cm</p>"
 		                    document.getElementById("visinaNumber").innerHTML = res[res.length-1].height;
 		                    preveri()
 					    },
@@ -434,8 +463,8 @@ $(document).ready(function() {
 
 
 //-----------------WIKI JSONP API
-function getWiki(){
-var url = "https://sl.wikipedia.org/wiki/Visok_krvni_tlak";  //to bomo spremenili tako da bo dobil spremenljivko v kateri je URL glede na kriterije
+function getWiki(url, divToPost, baseText){
+//var url = "https://sl.wikipedia.org/wiki/Visok_krvni_tlak";  //to bomo spremenili tako da bo dobil spremenljivko v kateri je URL glede na kriterije
 var title = url.split("/");
 title = title[title.length - 1];
 
@@ -469,7 +498,7 @@ $.getJSON("https://sl.wikipedia.org/w/api.php?action=parse&page=" + title + "&pr
         }
         pText = pText.substring(0, pText.length - 2); //Remove extra newline
         pText = pText.replace(/\[\d+\]/g, ""); //Remove reference tags (e.x. [1], [4], etc)
-        document.getElementById('wikiText').innerHTML = pText
+        document.getElementById(''+divToPost+'').innerHTML = baseText + pText + "<br><br>"
     }
 });
 }
