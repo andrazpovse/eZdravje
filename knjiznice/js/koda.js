@@ -319,6 +319,7 @@ function preberiMeritveVitalnihZnakov() {
     document.getElementById("wikiTextItm").innerHTML = "";
     document.getElementById("wikiTextTveganja").innerHTML = "";
     document.getElementById("wikiTextZdravje").innerHTML = "";
+    $("#wikiTextTveganja2").html("");  //lazje kot document.getelement blabla
     $("#wikiDetails").hide();
 
 	if (!ehrId || ehrId.trim().length == 0 ) {

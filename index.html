@@ -87,6 +87,9 @@
 						<span class="label label-default">Ime</span><input id="kreirajIme" type="text" class="form-control input-mini" placeholder="Bernie">
 						<span class="label label-default">Priimek</span><input id="kreirajPriimek" type="text" class="form-control" placeholder="Trump">
 						
+						<div id="howToGenerate">
+						  <p class="bg-info"> Da generirate <b>enega izmed treh vzorčnih bolnikov</b>, pritisnite gumb "Generiranje podatkov" zgoraj desno. </p>
+						</div>
 						<div id="kreiraniEHRji">
 						  
 						  
@@ -103,7 +106,7 @@
 				<div class="panel panel-default">
 					<div class="panel-heading">
 						<div class="row">
-							<div class="col-lg-6 col-md-6 col-sm-6"><b>Vnos</b> meritve <b>vitalnih znakov</b> bolnika</div>
+							<div class="col-lg-6 col-md-6 col-sm-6"><b>Ročni vnos</b> meritve <b>vitalnih znakov</b> bolnika</div>
 						</div>
 					</div>
 					<div class="panel-body">
@@ -122,13 +125,13 @@
 				<div class="panel panel-default">
 					<div class="panel-heading">
 						<div class="row">
-							<div class="col-lg-6 col-md-6 col-sm-6"><b>Pregled</b> meritev <b>vitalnih znakov</b> bolnika</div>
+							<div class="col-lg-6 col-md-6 col-sm-6"><b>Pregled zdravstvenega stanja </b> </div>
 							<div class="col-lg-3 col-md-3 col-sm-3"><select class="form-control input-sm" id="preberiEhrIdZaVitalneZnake"><option value=""></option><option value="9697cc02-bbb7-4366-9cde-9801823abd23">Nezdrava Oseba (visok pritisk in ITM)</option><option value="cff0e046-78e1-473e-8d76-619e92239365">Poškodovanec (visok utrip in nizek ITM)</option><option value="7f9fc320-d629-469b-8034-7e2c6630be04">Zdrava oseba</option></select></div>
 						</div>
 					</div>
 					<div class="panel-body">
 						<span class="label label-default">EHR ID</span><input id="meritveVitalnihZnakovEHRid" type="text" class="form-control input-mini" placeholder="7b661e12-3a98-21ad-c29e-2dc9f5a3d885">
-						<button type="button" class="btn btn-primary btn-xs" onclick="preberiMeritveVitalnihZnakov(); ">Preberi meritve vitalnih znakov</button>
+						<button type="button" class="btn btn-primary btn-xs" onclick="preberiMeritveVitalnihZnakov(); ">Preberi zdravstveno stanje</button>
 						<div id="rezultatMeritveVitalnihZnakov">
 						  
 						  
@@ -195,19 +198,24 @@
             
               
               var itm = (teza / ((visina/100) * (visina/100)));
+       
               if (itm > 25){
                 getWiki("https://sl.wikipedia.org/wiki/Indeks_telesne_mase", "wikiTextItm", "<b> ITM (indeks telesne mase): </b><br>")
                 getWiki("https://sl.wikipedia.org/wiki/Debelost", "wikiTextTveganja", "<b> Možna tveganja: </b><br>");
               }
-              else if(itm < 20){
+              if (itm < 20){
                 getWiki("https://sl.wikipedia.org/wiki/Indeks_telesne_mase", "wikiTextItm", "<b> ITM (indeks telesne mase): </b><br>")
-                getWiki("https://sl.wikipedia.org/wiki/Bulimija", "wikiTextTveganja", "<b> Možna tveganja: </b><br>");
+                getWiki("https://sl.wikipedia.org/wiki/Bulimija", "wikiTextTveganja2", "<b> Tveganja: </b><br>");
                 
               }
+              
               if (zgornjiTlak > 140 || spodnjiTlak > 90){
                 	getWiki('https://sl.wikipedia.org/wiki/Visok_krvni_tlak', "wikiTextBloodPressure", "<b> Krvni pritisk: </b><br>");
                 	getWiki("https://sl.wikipedia.org/wiki/Mo%C5%BEganska_kap", "wikiTextTveganja", "<b> Možna tveganja: </b><br>");
               }
+              
+              
+              
 
               
           
@@ -360,7 +368,7 @@
   				<div class="panel panel-default">
   					<div class="panel-heading">
   						<div class="row">
-  							<div class="col-lg-6 col-md-6 col-sm-6"><b>Izboljšajte</b> svoje <b>zdravje</b></div>
+  							<div class="col-lg-6 col-md-6 col-sm-6"><b>Izpis </b>vašega stanja glede na<b> optimalno</b></div>
   							
   						</div>
   					</div>
@@ -387,8 +395,10 @@
                  <div id="wikiTextDeath"></div>
       					 <div id="wikiTextBloodPressure"> </div>
       					 <div id="wikiTextItm"></div>
+      					 <div id="wikiTextTveganja2"></div>
       					 <div id="wikiTextTveganja"></div>
       					 <div id="wikiTextZdravje"></div>
+      					 <br> Vir: <a href="https://sl.wikipedia.org/">Wikipedija</a>
     			    </div>
     					 </div>
   				  </div>
