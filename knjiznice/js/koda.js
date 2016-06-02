@@ -23,6 +23,123 @@ function getSessionId() {
     return response.responseJSON.sessionId;
 }
 
+var podatkiZaGeneritat = '{ "pacient" : [' +
+'{ "firstName":"Zdrava" , "lastName":"Oseba", "visina":"170", "teza":"62", "srcniUtrip":"67", "spodnjiTlak":"84", "zgornjiTlak":"130" },' +
+'{ "firstName":"Poškodovana" , "lastName":"Oseba", "visina":"180", "teza":"75", "srcniUtrip":"185", "spodnjiTlak":"92", "zgornjiTlak":"142" },' +
+'{ "firstName":"Kronični" , "lastName":"Bolnik", "visina":"184", "teza":"120", "srcniUtrip":"85", "spodnjiTlak":"97", "zgornjiTlak":"150" } ]}';
+
+obj = JSON.parse(podatkiZaGeneritat);
+
+
+var stPacienta = 0;
+function generirajPodatke(){
+    if (stPacienta == 3){
+         $("#kreiraniEHRji").text("");
+        stPacienta = 0;
+    }
+    narediPaciente(stPacienta);
+    stPacienta++;
+       
+    
+}
+
+function narediPaciente(i) {
+  //tukaj bomo dodali generične paciente (kot študenti)
+    var ime, priimek, visina, teza, srcniUtrip, spodnjiTlak, zgornjiTlak;
+   
+  	sessionId = getSessionId();
+
+        	 ime = obj.pacient[i].firstName;
+        	 priimek = obj.pacient[i].lastName;
+        	 visina = obj.pacient[i].visina;
+        	 teza = obj.pacient[i].teza;
+        	 srcniUtrip = obj.pacient[i].srcniUtrip;
+        	 spodnjiTlak = obj.pacient[i].spodnjiTlak;
+        	 zgornjiTlak = obj.pacient[i].zgornjiTlak;
+        	
+        	
+        	//ustvarimo zapis z pacientovim imenom in priimkom
+        		$.ajaxSetup({
+        		    headers: {"Ehr-Session": sessionId}
+        		});
+        		$.ajax({
+        		    url: baseUrl + "/ehr",
+        		    type: 'POST',
+        		    success: function (data) {
+        		        var ehrId = data.ehrId;
+        		        var partyData = {
+        		            firstNames: ime,
+        		            lastNames: priimek,
+        		            partyAdditionalInfo: [{key: "ehrId", value: ehrId}]
+        		        };
+        		        $.ajax({
+        		            url: baseUrl + "/demographics/party",
+        		            type: 'POST',
+        		            contentType: 'application/json',
+        		            data: JSON.stringify(partyData),
+        		             success: function (party) {
+		                    if (party.action == 'CREATE') {
+		                        zapisiSePodatke(ehrId);
+		                    }
+		                 },
+        
+        		        });
+        		        
+        		        
+        		        //mu se vnesemo vrednosti
+        		         function zapisiSePodatke(ehrId){
+        		        $.ajaxSetup({
+        		            headers: {"Ehr-Session": sessionId}
+        		        });
+        		        	var podatki = {
+                			// Struktura predloge je na voljo na naslednjem spletnem naslovu:
+                            // https://rest.ehrscape.com/rest/v1/template/Vital%20Signs/example
+                		    "ctx/language": "en",
+                		    "ctx/territory": "SI",
+                		    
+                		    "vital_signs/height_length/any_event/body_height_length": visina,
+                		    "vital_signs/body_weight/any_event/body_weight": teza,
+                		    "vital_signs/pulse/any_event/rate|magnitude": srcniUtrip,
+                		    "vital_signs/pulse/any_event/rate|unit":"/min",
+                		    "vital_signs/blood_pressure/any_event/systolic": zgornjiTlak,
+                		    "vital_signs/blood_pressure/any_event/diastolic": spodnjiTlak,
+                		};
+                		var parametriZahteve = {
+                		    ehrId: ehrId,
+                		    templateId: 'Vital Signs',
+                		    format: 'FLAT',
+                		   // committer: merilec
+                		};
+                		$.ajax({
+                		    url: baseUrl + "/composition?" + $.param(parametriZahteve),
+                		    type: 'POST',
+                		    contentType: 'application/json',
+                		    data: JSON.stringify(podatki),
+                		    success: function (res) {
+                		        document.getElementById("kreiraniEHRji").innerHTML += "<p class='bg-success'> <b>Generiran vpis:</b> "+ime+" "+priimek+",<b> EHR-Id:</b> "+ ehrId + "</p><br>"
+                		    },
+                		    
+ 
+        		    });
+        		         }
+        		    }
+        		});
+        		
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -46,6 +163,7 @@ $(document).ready(function()
      
      
 //qtipi, ki nam kažejo kaj prikazuje kateri diagram
+
        $('#fillgauge2').qtip({   //prvi za spodnji krvni tlak----------------------------
         content: {
         text: 'Krvni tlak spodnji'
@@ -113,13 +231,7 @@ $(document).ready(function()
  * @param stPacienta zaporedna številka pacienta (1, 2 ali 3)
  * @return ehrId generiranega pacienta
  */
-function generirajPodatke() {
-  //tukaj bomo dodali generične paciente (kot študenti)
 
-  // TODO: Potrebno implementirati
-
-
-}
 
 
 // TODO: Tukaj implementirate funkcionalnost, ki jo podpira vaša aplikacija
@@ -267,9 +379,18 @@ function dodajMeritveVitalnihZnakov() {
 
 function preberiMeritveVitalnihZnakov() {
 	sessionId = getSessionId();
-
+    
+    
 	var ehrId = $("#meritveVitalnihZnakovEHRid").val();
-
+	
+	// Spodaj poskrbimo da so vrednosti ponovno "", ko izberemo drugega pacienta
+	//prav tako ponovno skrijemo vrednosti, tako da se pokazejo sele ob pritisku na gumb
+    document.getElementById("wikiTextBloodPressure").innerHTML = "";
+    document.getElementById("wikiTextDeath").innerHTML = "";
+    document.getElementById("wikiTextItm").innerHTML = "";
+    document.getElementById("wikiTextTveganja").innerHTML = "";
+    document.getElementById("wikiTextZdravje").innerHTML = "";
+    $("#wikiDetails").hide();
 
 	if (!ehrId || ehrId.trim().length == 0 ) {
 		$("#preberiMeritveVitalnihZnakovSporocilo").html("<span class='obvestilo " +
