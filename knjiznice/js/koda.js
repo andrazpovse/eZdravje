@@ -25,8 +25,8 @@ function getSessionId() {
 
 var podatkiZaGeneritat = '{ "pacient" : [' +
 '{ "firstName":"Zdrava" , "lastName":"Oseba", "visina":"170", "teza":"62", "srcniUtrip":"67", "spodnjiTlak":"84", "zgornjiTlak":"130" },' +
-'{ "firstName":"Poškodovana" , "lastName":"Oseba", "visina":"180", "teza":"75", "srcniUtrip":"185", "spodnjiTlak":"92", "zgornjiTlak":"142" },' +
-'{ "firstName":"Kronični" , "lastName":"Bolnik", "visina":"184", "teza":"120", "srcniUtrip":"85", "spodnjiTlak":"97", "zgornjiTlak":"150" } ]}';
+'{ "firstName":"Poškodovana" , "lastName":"Oseba(visok srčni utrip)", "visina":"180", "teza":"75", "srcniUtrip":"185", "spodnjiTlak":"92", "zgornjiTlak":"142" },' +
+'{ "firstName":"Nezdrava" , "lastName":"Oseba (visok pritisk in ITM)", "visina":"175", "teza":"120", "srcniUtrip":"85", "spodnjiTlak":"110", "zgornjiTlak":"160" } ]}';
 
 obj = JSON.parse(podatkiZaGeneritat);
 

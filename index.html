@@ -60,7 +60,7 @@
         <ul class="nav navbar-nav">
           <li><a href="opis.html">Opis ideje</a></li>
           <li><a href="nacrt.html">Načrt informacijske rešitve</a></li>
-          <li><a onclick="generirajPodatke(1)" href="#">Generiranje podatkov</a></li>
+          <li><a onclick="generirajPodatke()" href="#">Generiranje podatkov</a></li>
         </ul>
       </div>
     </div>
@@ -124,7 +124,7 @@
 					<div class="panel-heading">
 						<div class="row">
 							<div class="col-lg-6 col-md-6 col-sm-6"><b>Pregled</b> meritev <b>vitalnih znakov</b> bolnika</div>
-							<div class="col-lg-3 col-md-3 col-sm-3"><select class="form-control input-sm" id="preberiEhrIdZaVitalneZnake"><option value=""></option><option value="65bdf041-44f1-4b53-af7d-260df3901a5c">Kronični Bolnik</option><option value="1dafc5e6-d772-489f-bec7-18c2360abe76">Poškodovana oseba</option><option value="7f9fc320-d629-469b-8034-7e2c6630be04">Zdrava oseba</option></select></div>
+							<div class="col-lg-3 col-md-3 col-sm-3"><select class="form-control input-sm" id="preberiEhrIdZaVitalneZnake"><option value=""></option><option value="9697cc02-bbb7-4366-9cde-9801823abd23">Nezdrava Oseba (visok pritisk in ITM)</option><option value="dc397430-78ff-4066-b0dd-1f2cf2722c086">Poškodovana Oseba(visok srčni utrip)</option><option value="7f9fc320-d629-469b-8034-7e2c6630be04">Zdrava oseba</option></select></div>
 						</div>
 					</div>
 					<div class="panel-body">
@@ -182,7 +182,7 @@
            document.getElementById('bubbles').innerHTML = '<div id="overall"> <h3> Vaše zdravje na lestvici 1 - 100<br> </h3> <svg id="fillgauge1"  width="97%" height="250" onclick=""></svg> </div>  <div id="details">               <div id="vitalneFunkcije">  <h3> Vitalni podatki </h3> <svg id="fillgauge3" width="32%" height="200"></svg>     <svg id="fillgauge2" width="32%" height="200" onclick=""></svg>    <svg id="fillgauge4" width="32%" height="200" onclick=""></svg>  </div> <br> <div id="tezaInVelikost"> <h3> Višina in teža</h3>       <svg id="fillgauge5" width="48%" height="200" onclick=""></svg>     <svg id="fillgauge6" width="48%" height="200" onclick=""></svg>     </div>   </div>';
            //spet naredimo innerHTML grafe...
            
-           var stevecZaZdravje = 0;
+
             srcniUtrip = document.getElementById("utripNumber").innerHTML;
             teza = document.getElementById("tezaNumber").innerHTML;
             visina = document.getElementById("visinaNumber").innerHTML;
@@ -192,14 +192,9 @@
               if (srcniUtrip == 0){
                 getWiki("https://sl.wikipedia.org/wiki/Smrt", "wikiTextDeath", "<b> Smrt: </b><br> ")
               }
-              else{
-                stevecZaZdravje++;
-              }
+
               if (zgornjiTlak > 140 || spodnjiTlak > 90){
                 	getWiki('https://sl.wikipedia.org/wiki/Visok_krvni_tlak', "wikiTextBloodPressure", "<b> Krvni pritisk: </b><br>");
-              }
-              else{
-                stevecZaZdravje++;
               }
               
               var itm = (teza / ((visina/100) * (visina/100)));
@@ -212,22 +207,66 @@
                 getWiki("https://sl.wikipedia.org/wiki/Anoreksija", "wikiTextTveganja", "<b> Možna tveganja: </b><br>");
                 
               }
-              else{
-                stevecZaZdravje++;
-              }
+
               
-              if (stevecZaZdravje == 3){
-                getWiki("https://sl.wikipedia.org/wiki/Zdravje", "wikiTextZdravje", "<b> Vaše zdravstveno stanje je optimalno!</b><br>")
+          
+              
+              //dobimo procentualno oceno glede na itm
+              var ocenaGledeItm;
+              if (itm > 25){
+                ocenaGledeItm = (25/itm)*100;
+              }
+              else if (itm < 20){
+                ocenaGledeItm = (itm/20)*100;
+              }
+              else
+                ocenaGledeItm = 100;
                 
+              //dobimo procentualno oceno glede na srcni utrip
+              var ocenaSrcnegaUtripa;
+              if (srcniUtrip > 130){
+                ocenaSrcnegaUtripa = (130/srcniUtrip)*100;
               }
-              
-              stevecZaZdravje = 0;
-              var ocenaGledeItm = (itm/22)*100;
-              var ocenaSrcnegaUtripa = (srcniUtrip/70)
-              var povprecnoZdravje  ;
+              else if (srcniUtrip < 40){
+                ocenaSrcnegaUtripa = (srcniUtrip/40)*100;
+              }
+              else if (srcniUtrip == 0){
+                ocenaSrcnegaUtripa = 0;
+              }
+              else  
+                ocenaSrcnegaUtripa = 100;
+                
+                //za spodnji pritisk
+              var ocenaGledeSpodnjegaPritiska;
+              if (spodnjiTlak < 60){
+                ocenaGledeSpodnjegaPritiska = (spodnjiTlak/60)*100;
+              }
+              else if (spodnjiTlak > 90){
+                ocenaGledeSpodnjegaPritiska = (90/spodnjiTlak)*100;
+              }
+              else
+                ocenaGledeSpodnjegaPritiska = 100;
+                
+                //za zgornji pritisk
+              var ocenaGledeZgornjegaPritiska;
+              if (zgornjiTlak < 100){
+                ocenaGledeZgornjegaPritiska = (zgornjiTlak/100)*100;
+              }
+              else if (zgornjiTlak > 140){
+                ocenaGledeZgornjegaPritiska = (140/zgornjiTlak)*100;
+              }
+              else  
+                ocenaGledeZgornjegaPritiska = 100;
+                
+                
+                
+                //najvišjo utež ima ITM, sledita mu pritiska, srčni utrip pa ima nizko utež
+              var povprecnoZdravje = (ocenaGledeItm*9 + ocenaSrcnegaUtripa + ocenaGledeSpodnjegaPritiska*7 + ocenaGledeZgornjegaPritiska*7)/24 ;
             
-         
-            
+          if (povprecnoZdravje > 95){
+            getWiki("https://sl.wikipedia.org/wiki/Zdravje", "wikiTextZdravje", "<b> Vaše zdravstveno stanje je dobro (več kot 95%)!</b><br>")
+          }
+             
           
           
          
@@ -237,7 +276,7 @@
             var configResult = liquidFillGaugeDefaultSettings();
             configResult.minValue = 1;
             configResult.maxValue = 100;
-            var gauge1 = loadLiquidFillGauge("fillgauge1", 18, configResult);    //overall ocena
+            var gauge1 = loadLiquidFillGauge("fillgauge1", povprecnoZdravje, configResult);    //overall ocena
             
             
             var config1 = liquidFillGaugeDefaultSettings();
