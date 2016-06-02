@@ -23,9 +23,12 @@ function getSessionId() {
     return response.responseJSON.sessionId;
 }
 
+
+
+//podatki o pacientih ki jih lahko generiramo
 var podatkiZaGeneritat = '{ "pacient" : [' +
 '{ "firstName":"Zdrava" , "lastName":"Oseba", "visina":"170", "teza":"62", "srcniUtrip":"67", "spodnjiTlak":"84", "zgornjiTlak":"130" },' +
-'{ "firstName":"Poškodovana" , "lastName":"Oseba(visok srčni utrip)", "visina":"180", "teza":"75", "srcniUtrip":"185", "spodnjiTlak":"92", "zgornjiTlak":"142" },' +
+'{ "firstName":"Poškodovanec" , "lastName":"(visok utrip in nizek ITM)", "visina":"180", "teza":"57", "srcniUtrip":"185", "spodnjiTlak":"92", "zgornjiTlak":"142" },' +
 '{ "firstName":"Nezdrava" , "lastName":"Oseba (visok pritisk in ITM)", "visina":"175", "teza":"120", "srcniUtrip":"85", "spodnjiTlak":"110", "zgornjiTlak":"160" } ]}';
 
 obj = JSON.parse(podatkiZaGeneritat);
@@ -131,18 +134,6 @@ function narediPaciente(i) {
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
 $(document).ready(function() 
 
 
@@ -158,69 +149,7 @@ $(document).ready(function()
      $("#details").hide();
      
      
-   
-     
-     
-     
-//qtipi, ki nam kažejo kaj prikazuje kateri diagram
 
-       $('#fillgauge2').qtip({   //prvi za spodnji krvni tlak----------------------------
-        content: {
-        text: 'Krvni tlak spodnji'
-    },
-        position: {
-        my: 'top center',  // Position my top left...
-        at: 'top center', // at the bottom right of...
-        target: $('#fillgauge2') // my target
-    },
-    
-         
-     });
-       $('#fillgauge3').qtip({  //krvni tlak zgornji ---------------------------------
-        content: {
-        text: 'Krvni tlak zgornji'
-    },
-        position: {
-        my: 'top center',  // Position my top left...
-        at: 'top center', // at the bottom right of...
-        target: $('#fillgauge3') // my target
-    }
-         
-     });
-       $('#fillgauge4').qtip({   // srčni utrip --------------------------------------
-        content: {
-        text: 'Srčni utrip'
-    },
-        position: {
-        my: 'top center',  // Position my top left...
-        at: 'top center', // at the bottom right of...
-        target: $('#fillgauge4') // my target
-    }
-         
-     });
-     $('#fillgauge5').qtip({  // višina -------------------------------------------
-        content: {
-        text: 'Višina'
-    },
-        position: {
-        my: 'top center',  // Position my top left...
-        at: 'top center', // at the bottom right of...
-        target: $('#fillgauge5') // my target
-    }
-         
-     });
-     
-      $('#fillgauge6').qtip({  // teža -------------------------------------------------------------
-        content: {
-        text: 'Teža'
-    },
-        position: {
-        my: 'top center',  // Position my top left...
-        at: 'top center', // at the bottom right of...
-        target: $('#fillgauge6') // my target
-    }
-         
-     });
  });
 
 /**

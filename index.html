@@ -123,7 +123,7 @@
 					<div class="panel-heading">
 						<div class="row">
 							<div class="col-lg-6 col-md-6 col-sm-6"><b>Pregled</b> meritev <b>vitalnih znakov</b> bolnika</div>
-							<div class="col-lg-3 col-md-3 col-sm-3"><select class="form-control input-sm" id="preberiEhrIdZaVitalneZnake"><option value=""></option><option value="9697cc02-bbb7-4366-9cde-9801823abd23">Nezdrava Oseba (visok pritisk in ITM)</option><option value="dc397430-78ff-4066-b0dd-1f2cf2722c086">Poškodovana Oseba(visok srčni utrip)</option><option value="7f9fc320-d629-469b-8034-7e2c6630be04">Zdrava oseba</option></select></div>
+							<div class="col-lg-3 col-md-3 col-sm-3"><select class="form-control input-sm" id="preberiEhrIdZaVitalneZnake"><option value=""></option><option value="9697cc02-bbb7-4366-9cde-9801823abd23">Nezdrava Oseba (visok pritisk in ITM)</option><option value="cff0e046-78e1-473e-8d76-619e92239365">Poškodovanec (visok utrip in nizek ITM)</option><option value="7f9fc320-d629-469b-8034-7e2c6630be04">Zdrava oseba</option></select></div>
 						</div>
 					</div>
 					<div class="panel-body">
@@ -192,9 +192,7 @@
                 getWiki("https://sl.wikipedia.org/wiki/Smrt", "wikiTextDeath", "<b> Smrt: </b><br> ")
               }
 
-              if (zgornjiTlak > 140 || spodnjiTlak > 90){
-                	getWiki('https://sl.wikipedia.org/wiki/Visok_krvni_tlak', "wikiTextBloodPressure", "<b> Krvni pritisk: </b><br>");
-              }
+            
               
               var itm = (teza / ((visina/100) * (visina/100)));
               if (itm > 25){
@@ -203,8 +201,12 @@
               }
               else if(itm < 20){
                 getWiki("https://sl.wikipedia.org/wiki/Indeks_telesne_mase", "wikiTextItm", "<b> ITM (indeks telesne mase): </b><br>")
-                getWiki("https://sl.wikipedia.org/wiki/Anoreksija", "wikiTextTveganja", "<b> Možna tveganja: </b><br>");
+                getWiki("https://sl.wikipedia.org/wiki/Bulimija", "wikiTextTveganja", "<b> Možna tveganja: </b><br>");
                 
+              }
+              if (zgornjiTlak > 140 || spodnjiTlak > 90){
+                	getWiki('https://sl.wikipedia.org/wiki/Visok_krvni_tlak', "wikiTextBloodPressure", "<b> Krvni pritisk: </b><br>");
+                	getWiki("https://sl.wikipedia.org/wiki/Mo%C5%BEganska_kap", "wikiTextTveganja", "<b> Možna tveganja: </b><br>");
               }
 
               
