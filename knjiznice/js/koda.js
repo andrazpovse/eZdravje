@@ -28,7 +28,7 @@ function getSessionId() {
 //podatki o pacientih ki jih lahko generiramo
 var podatkiZaGeneritat = '{ "pacient" : [' +
 '{ "firstName":"Zdrava" , "lastName":"Oseba", "visina":"170", "teza":"62", "srcniUtrip":"67", "spodnjiTlak":"84", "zgornjiTlak":"130" },' +
-'{ "firstName":"Poškodovanec" , "lastName":"(visok utrip in nizek ITM)", "visina":"180", "teza":"57", "srcniUtrip":"185", "spodnjiTlak":"92", "zgornjiTlak":"142" },' +
+'{ "firstName":"Poškodovanec" , "lastName":"(visok utrip, nizek ITM)", "visina":"180", "teza":"57", "srcniUtrip":"185", "spodnjiTlak":"92", "zgornjiTlak":"142" },' +
 '{ "firstName":"Nezdrava" , "lastName":"Oseba (visok pritisk in ITM)", "visina":"175", "teza":"120", "srcniUtrip":"85", "spodnjiTlak":"110", "zgornjiTlak":"160" } ]}';
 
 obj = JSON.parse(podatkiZaGeneritat);
@@ -135,35 +135,16 @@ function narediPaciente(i) {
 
 
 $(document).ready(function() 
-
-
-
  {
-     
-     
      $("#wikiDetails").hide();
      $("#friendlyTip").hide();
      
      
      $("#overall").hide();
      $("#details").hide();
-     
-     
 
  });
 
-/**
- * Generator podatkov za novega pacienta, ki bo uporabljal aplikacijo. Pri
- * generiranju podatkov je potrebno najprej kreirati novega pacienta z
- * določenimi osebnimi podatki (ime, priimek in datum rojstva) ter za njega
- * shraniti nekaj podatkov o vitalnih znakih.
- * @param stPacienta zaporedna številka pacienta (1, 2 ali 3)
- * @return ehrId generiranega pacienta
- */
-
-
-
-// TODO: Tukaj implementirate funkcionalnost, ki jo podpira vaša aplikacija
 
 
 
@@ -448,52 +429,8 @@ function preberiMeritveVitalnihZnakov() {
 $(document).ready(function() {
 
   /**
-   * Napolni testne vrednosti (ime, priimek in datum rojstva) pri kreiranju
-   * EHR zapisa za novega bolnika, ko uporabnik izbere vrednost iz
-   * padajočega menuja (npr. Pujsa Pepa).
-   */
-  $('#preberiPredlogoBolnika').change(function() {
-    $("#kreirajSporocilo").html("");
-    var podatki = $(this).val().split(",");
-    $("#kreirajIme").val(podatki[0]);
-    $("#kreirajPriimek").val(podatki[1]);
-    $("#kreirajDatumRojstva").val(podatki[2]);
-  });
-
-  /**
-   * Napolni testni EHR ID pri prebiranju EHR zapisa obstoječega bolnika,
-   * ko uporabnik izbere vrednost iz padajočega menuja
-   * (npr. Dejan Lavbič, Pujsa Pepa, Ata Smrk)
-   */
-	$('#preberiObstojeciEHR').change(function() {
-		$("#preberiSporocilo").html("");
-		$("#preberiEHRid").val($(this).val());
-	});
-
-  /**
-   * Napolni testne vrednosti (EHR ID, datum in ura, telesna višina,
-   * telesna teža, telesna temperatura, sistolični in diastolični krvni tlak,
-   * nasičenost krvi s kisikom in merilec) pri vnosu meritve vitalnih znakov
-   * bolnika, ko uporabnik izbere vrednosti iz padajočega menuja (npr. Ata Smrk)
-   */
-	$('#preberiObstojeciVitalniZnak').change(function() {
-		$("#dodajMeritveVitalnihZnakovSporocilo").html("");
-		var podatki = $(this).val().split("|");
-		$("#dodajVitalnoEHR").val(podatki[0]);
-		$("#dodajVitalnoDatumInUra").val(podatki[1]);
-		$("#dodajVitalnoTelesnaVisina").val(podatki[2]);
-		$("#dodajVitalnoTelesnaTeza").val(podatki[3]);
-		$("#dodajVitalnoTelesnaTemperatura").val(podatki[4]);
-		$("#dodajVitalnoKrvniTlakSistolicni").val(podatki[5]);
-		$("#dodajVitalnoKrvniTlakDiastolicni").val(podatki[6]);
-		$("#dodajVitalnoNasicenostKrviSKisikom").val(podatki[7]);
-		$("#dodajVitalnoMerilec").val(podatki[8]);
-	});
-
-  /**
    * Napolni testni EHR ID pri pregledu meritev vitalnih znakov obstoječega
    * bolnika, ko uporabnik izbere vrednost iz padajočega menuja
-   * (npr. Ata Smrk, Pujsa Pepa)
    */
 	$('#preberiEhrIdZaVitalneZnake').change(function() {
 		$("#preberiMeritveVitalnihZnakovSporocilo").html("");
