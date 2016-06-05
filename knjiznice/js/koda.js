@@ -35,18 +35,18 @@ obj = JSON.parse(podatkiZaGeneritat);
 
 
 var stPacienta = 0;
-function generirajPodatke(){
+function narediPaciente(){
     if (stPacienta == 3){
          $("#kreiraniEHRji").text("");
         stPacienta = 0;
     }
-    narediPaciente(stPacienta);
+    generirajPodatke(stPacienta);
     stPacienta++;
        
     
 }
 
-function narediPaciente(i) {
+function generirajPodatke(i) {
   //tukaj bomo dodali generične paciente (kot študenti)
     var ime, priimek, visina, teza, srcniUtrip, spodnjiTlak, zgornjiTlak;
    
